@@ -1,0 +1,41 @@
+on:
+  push:
+    branches:
+      - main
+      - 'releases/**'
+  
+jobs:
+  publish:
+    environment: cloudflare_secrets
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Publish to Cloudflare Pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get the JSON files
+        shell: bash
+        run: |            
+             wget https://github.com/chasemc/temp3/releases/download/a/socialgene_mibig_refseq_search_json.tar.gz
+             wget https://github.com/chasemc/temp3/releases/download/a/md5
+             md5sum -c md5
+             tar -xf socialgene_mibig_refseq_search_json.tar.gz
+             rm socialgene_mibig_refseq_search_json.tar.gz
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: bgcatlas
+          directory: .
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          # Optional: Switch what branch you are publishing to.
+          # By default this will be the branch which triggered this workflow
+          branch: production
+          # Optional: Change the working directory
+          workingDirectory: .
+          # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
+          wranglerVersion: '3'

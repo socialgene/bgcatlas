@@ -1,1 +1,1 @@
-# bgcatlas
+# bgc_atlas
