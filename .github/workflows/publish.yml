@@ -19,8 +19,8 @@ jobs:
       - name: Get the JSON files
         shell: bash
         run: |            
-             wget https://github.com/chasemc/temp3/releases/download/a/socialgene_mibig_refseq_search_json.tar.gz
-             wget https://github.com/chasemc/temp3/releases/download/a/md5
+             wget https://github.com/socialgene/bgcatlas/releases/download/1.0.0/socialgene_mibig_refseq_search_json.tar.gz
+             wget https://github.com/socialgene/bgcatlas/releases/download/1.0.0/md5
              md5sum -c md5
              tar -xf socialgene_mibig_refseq_search_json.tar.gz
              rm socialgene_mibig_refseq_search_json.tar.gz
